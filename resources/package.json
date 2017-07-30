@@ -1,0 +1,16 @@
+{
+    "name": "davideperozzi-rofp",
+    "version": "1.0",
+    "description": "Game for ldjam",
+    "license": "ISC",
+    "author": "Davide Perozzi",
+    "devDependencies": {
+        "dj-gulp-tasks": "^1.0.51",
+        "dj-library": "^1.0.96",
+        "google-closure-library": "^20170626.0.0",
+        "gsap": "^1.20.2",
+        "matter-js": "^0.13.0",
+        "pixi-particles": "^2.1.5",
+        "pixi.js": "^4.5.4"
+    }
+}
