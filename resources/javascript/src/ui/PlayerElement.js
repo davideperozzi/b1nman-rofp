@@ -107,6 +107,7 @@ rofp.ui.PlayerElement.prototype.init = function()
         this.sprite_ = new PIXI.Sprite.fromImage("resources/images/character/idle.png");
         this.sprite_.texture.baseTexture.on('loaded', this.spriteLoaded_.bind(this));
         this.sprite_.anchor.set(0.5, 1);
+        this.sprite_.alpha = 0;
 
         this.bullet_ = new PIXI.TilingSprite.fromImage("resources/images/character/bullet.png");
         this.sprite_.addChild(this.bullet_);
@@ -168,7 +169,11 @@ rofp.ui.PlayerElement.prototype.spriteLoaded_ = function()
 
     Matter.Body.translate(this.player_, {
         x: this.stageSize.width / 2 - this.sprite_.width / 2,
-        y: this.stageSize.height / 2,
+        y: this.stageSize.height - 100,
+    });
+
+    com.greensock.TweenMax.to(this.sprite_, 1, {
+        alpha: 1
     });
 
     this.bullet_.alpha = 0;
@@ -373,8 +378,8 @@ rofp.ui.PlayerElement.prototype.startShoot_ = function()
         this.player_,
         this.player_.position,
         {
-            x: -0.002 * this.sprite_.scale.x * this.player_.mass,
-            y: -0.0027 * this.player_.mass
+            x: -0.0015 * this.sprite_.scale.x * this.player_.mass,
+            y: -0.0026 * this.player_.mass
         }
     );
 };
@@ -394,8 +399,10 @@ rofp.ui.PlayerElement.prototype.endShoot_ = function()
 
 /**
  * @param {number} damage
+ * @param {number=} optForceX
+ * @param {number=} optForceY
  */
-rofp.ui.PlayerElement.prototype.hit = function(damage, optDirection)
+rofp.ui.PlayerElement.prototype.hit = function(damage, optDirection, optForceX, optForceY)
 {
     goog.dom.classlist.enable(document.body, 'hit', true);
 
@@ -409,8 +416,8 @@ rofp.ui.PlayerElement.prototype.hit = function(damage, optDirection)
             this.player_,
             this.player_.position,
             {
-                x: -0.05 * (optDirection || 1) * this.player_.mass,
-                y: -0.05 * this.player_.mass
+                x: -(optForceX || 0.05) * (optDirection || 1) * this.player_.mass,
+                y: -(optForceX || 0.05) * this.player_.mass
             }
         );
 

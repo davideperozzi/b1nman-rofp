@@ -107,6 +107,12 @@ rofp.ui.Enemy1Element = function(x, y)
      * @type {number}
      */
     this.startNextInterval_ = -1;
+
+    /**
+     * @protected
+     * @type {bumber}
+     */
+    this.maxDamage = 200;
 };
 
 goog.inherits(

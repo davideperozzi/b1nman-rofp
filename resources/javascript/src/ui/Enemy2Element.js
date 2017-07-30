@@ -53,6 +53,12 @@ rofp.ui.Enemy2Element = function(x, y)
      * @type {number}
      */
     this.powerBonus = 5;
+
+    /**
+     * @protected
+     * @type {bumber}
+     */
+    this.maxDamage = 250;
 };
 
 goog.inherits(
@@ -118,7 +124,7 @@ rofp.ui.Enemy2Element.prototype.collisionActive = function(event)
                 }
 
                 if ( ! this.hitProtect_ && ! this.dying_) {
-                    this.target.hit(7, direction);
+                    this.target.hit(7, direction, 0.03, 0.03);
                     this.hitProtect_ = true;
                     this.handleDie();
                 }

@@ -282,7 +282,9 @@ rofp.controllers.EnemyController.prototype.setTarget = function(target)
  */
 rofp.controllers.EnemyController.prototype.spawnEnemy1_ = function()
 {
-    var enemy = this.spawn(Math.random() * this.stageSize_.width, 10, rofp.ui.Enemy1Element);
+    var posX = goog.math.clamp(Math.random() * this.stageSize_.width, 50, this.stageSize_.width - 50);
+    var enemy = this.spawn(posX, 10, rofp.ui.Enemy1Element);
+
     this.enemies_.push(enemy);
 };
 
@@ -291,7 +293,9 @@ rofp.controllers.EnemyController.prototype.spawnEnemy1_ = function()
  */
 rofp.controllers.EnemyController.prototype.spawnEnemy2_ = function()
 {
-    var enemy = this.spawn(Math.random() * this.stageSize_.width, 10, rofp.ui.Enemy2Element);
+    var posX = goog.math.clamp(Math.random() * this.stageSize_.width, 50, this.stageSize_.width - 50);
+    var enemy = this.spawn(posX, 10, rofp.ui.Enemy2Element);
+
     this.enemies_.push(enemy);
 };
 
@@ -308,6 +312,12 @@ rofp.controllers.EnemyController.prototype.spawn = function(x, y, ctor)
     enemy.setStageSize(this.stageSize_.width, this.stageSize_.height);
     enemy.init().then(function(){
         this.stageController_.add(enemy);
+
+        enemy.freeze();
+
+        setTimeout(function(){
+            enemy.unfreeze();
+        }, 1000);
     }, null, this);
 
     return enemy;

@@ -40,10 +40,8 @@ rofp.controllers.PlatformController.prototype.init = function(stage, size)
     platforms.push(new rofp.ui.PlatformElement(100, 400));
     platforms.push(new rofp.ui.PlatformElement(300, 300, "platform-2.png"));
     platforms.push(new rofp.ui.PlatformElement(size.width - 100, 400, "platform-3.png"));
-    // platforms.push(new rofp.ui.PlatformElement(size.width - 250, 350));
-    // platforms.push(new rofp.ui.PlatformElement(size.width / 2, 150, "platform-2.png"));
-    // platforms.push(new rofp.ui.PlatformElement(0, 200, "platform-3.png"));
-    // platforms.push(new rofp.ui.PlatformElement(size.width - 100, 200));
+    platforms.push(new rofp.ui.PlatformElement(size.width / 2, 150, "platform-2.png"));
+    platforms.push(new rofp.ui.PlatformElement(0, 200, "platform-3.png"));
 
     for (var i = 0, len = platforms.length; i < len; i++) {
         platforms[i].setStageSize(size);

@@ -100,7 +100,7 @@ rofp.ui.AbstractEnemyElement = function(x, y)
      * @private
      * @type {number}
      */
-    this.maxDamage_ = 500;
+    this.maxDamage = 500;
 
     /**
      * @type {number}
@@ -146,6 +146,7 @@ rofp.ui.AbstractEnemyElement.prototype.init = function()
     return new goog.Promise(function(resolve, reject){
         this.sprite = new PIXI.Sprite.fromImage(this.spriteImage);
         this.sprite.anchor.set(0.5, 1);
+        this.sprite.alpha = 0;
 
         if ( ! rofp.ui.AbstractEnemyElement.SPRITE_LOADED[this.spriteImage]) {
             this.sprite.texture.baseTexture.on('loaded', this.spriteLoaded_.bind(this));
@@ -157,6 +158,22 @@ rofp.ui.AbstractEnemyElement.prototype.init = function()
         }
 
     }, this);
+};
+
+/**
+ *
+ */
+rofp.ui.AbstractEnemyElement.prototype.freeze = function()
+{
+    Matter.Body.setStatic(this.enemy, true);
+};
+
+/**
+ *
+ */
+rofp.ui.AbstractEnemyElement.prototype.unfreeze = function()
+{
+    Matter.Body.setStatic(this.enemy, false);
 };
 
 /**
@@ -205,6 +222,10 @@ rofp.ui.AbstractEnemyElement.prototype.createEnemyBodyParts = function()
 rofp.ui.AbstractEnemyElement.prototype.spriteLoaded_ = function()
 {
     rofp.ui.AbstractEnemyElement.SPRITE_LOADED[this.spriteImage] = true;
+
+    com.greensock.TweenMax.to(this.sprite, .5, {
+        alpha: 1
+    });
 
     this.enemyBody_ = Matter.Bodies.rectangle(
         this.sprite.width / 2,
@@ -345,12 +366,12 @@ rofp.ui.AbstractEnemyElement.prototype.damageTaken_ = function(damage)
     if ( ! this.dying) {
         this.damage_ += damage;
 
-        if (this.damage_ >= this.maxDamage_) {
+        if (this.damage_ >= this.maxDamage) {
             this.target.handleKill(this.powerBonus);
             this.handleDie();
         }
 
-        var scaleAddition = goog.math.clamp(this.damage_ / this.maxDamage_, 0, .3);
+        var scaleAddition = goog.math.clamp(this.damage_ / this.maxDamage, 0, .3);
 
         this.sprite.scale.set(1 + scaleAddition, 1 + scaleAddition);
     }
