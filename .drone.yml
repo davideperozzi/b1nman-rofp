@@ -1,0 +1,32 @@
+kind: pipeline
+type: docker
+name: production
+trigger:
+  branch:
+    - master
+  event:
+    - push
+steps:
+  - name: build app
+    image: plugins/docker
+    settings:
+      tags: latest
+      registry: docker.dorfjungs.io
+      repo: docker.dorfjungs.io/davideperozzi/b1nman-rofp
+      context: ./
+      dockerfile: ./Dockerfile
+      force_tag: true
+      username: { from_secret: docker_username }
+      password: { from_secret: docker_password }
+  - name: deploy
+    image: dorfjungs/drone-docker-stack
+    settings:
+      name: portfolio
+      stack: [ .stack.yml ]
+      host: davideperozzi.com
+      user: root
+      key: { from_secret: davideperozzi_ssh_private_key }
+    environment:
+      APP_DOMAIN: b1nman-rofp.davideperozzi.com
+      APP_IMAGE: docker.dorfjungs.io/davideperozzi/b1nman-rofp
+      IMAGE_TAG: latest

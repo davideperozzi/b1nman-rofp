@@ -2,3 +2,4 @@ resources/node_modules
 resources/javascript/gen
 resources/javascript/dist
 .DS_Store
+.history

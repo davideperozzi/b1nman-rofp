@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  app:
+    image: ${APP_IMAGE}:${IMAGE_TAG}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.portfolio_app.entrypoints=https
+        - traefik.http.routers.portfolio_app.middlewares=trim_www
+        - traefik.http.routers.portfolio_app.rule=Host(`${APP_DOMAIN}`, `www.${APP_DOMAIN}`)
+        - traefik.http.routers.portfolio_app.service=portfolio_app
+        - traefik.http.routers.portfolio_app.tls.certresolver=default1
+        - traefik.http.services.portfolio_app.loadbalancer.server.port=80
+    networks:
+      - default
+      - traefik-public
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public
