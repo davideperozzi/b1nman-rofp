@@ -16,8 +16,8 @@ steps:
       context: ./
       dockerfile: ./Dockerfile
       force_tag: true
-      username: { from_secret: docker_username }
-      password: { from_secret: docker_password }
+      username: { from_secret: dorfjungs_docker_username }
+      password: { from_secret: dorfjungs_docker_password }
   - name: deploy
     image: dorfjungs/drone-docker-stack
     settings:
