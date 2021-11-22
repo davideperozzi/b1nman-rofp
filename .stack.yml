@@ -5,11 +5,11 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.middlewares.${APP_NAME}_domain_redirect1.redirectregex.regex=^https?://b1nman-rofp.davide(-|)perozzi.de/(.*)
+        - traefik.http.middlewares.${APP_NAME}_domain_redirect1.redirectregex.regex=^https?://b1nman.davide(-|)perozzi.de/(.*)
         - traefik.http.middlewares.${APP_NAME}_domain_redirect1.redirectregex.replacement=https://${APP_DOMAIN}/$${2}
         - traefik.http.routers.${APP_NAME}.entrypoints=https
-        - traefik.http.routers.${APP_NAME}.middlewares=trim_www
-        - traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}`, `www.${APP_DOMAIN}`, `b1nman-rofp.davideperozzi.de`, `b1nman-rofp.davide-perozzi.de`)
+        - traefik.http.routers.${APP_NAME}.middlewares=trim_www,${APP_NAME}_domain_redirect1
+        - traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}`, `www.${APP_DOMAIN}`, `b1nman.davideperozzi.de`, `b1nman.davide-perozzi.de`)
         - traefik.http.routers.${APP_NAME}.service=${APP_NAME}
         - traefik.http.routers.${APP_NAME}.tls.certresolver=default1
         - traefik.http.services.${APP_NAME}.loadbalancer.server.port=80

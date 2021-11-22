@@ -28,6 +28,6 @@ steps:
       key: { from_secret: davideperozzi_ssh_private_key }
     environment:
       APP_NAME: b1nman-rofp
-      APP_DOMAIN: b1nman-rofp.davideperozzi.com
+      APP_DOMAIN: b1nman.davideperozzi.com
       APP_IMAGE: docker.dorfjungs.io/davideperozzi/b1nman-rofp
       IMAGE_TAG: latest
